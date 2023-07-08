@@ -1,0 +1,35 @@
+{% extends 'html/base.html' %}
+{% block content %}
+    <div class="container">
+        <h1 class="title">
+            <a href="">Agenda</a>
+        </h1>
+        <a class="create-contact" href="">Criar</a>
+        <div class="contact-info">
+            <p>id</p>
+            <p>nome</p>
+            <p>email</p>
+            <p>celular</p>
+        </div>
+        {% for contact in contacts %}
+        <div class="contact-info">
+                <p>
+                    <a href="{% url 'contact:view_contact' contact.pk %}">{{contact.pk}}</a>
+                </p>
+                <p>{{contact.primeiro_nome}} {{contact.ultimo_nome}}</p>
+                <p>{{contact.email}}</p>
+                <p>{{contact.celular}}</p>
+        </div>
+        {%endfor%}
+        {% if contacts.has_previous %}
+            <a  class="previous-btn" href="{% url 'contact:index' contacts.previous_page_number %}">anterior</a>
+        {% else %}
+            <a class="previous-btn" href="">anterior</a>
+        {% endif%}
+        {% if contacts.has_next %}
+            <a class="next-btn" href="{% url 'contact:index' contacts.next_page_number %}">proximo</a>
+        {% else %}
+            <a class="next-btn" href="">proximo</a>
+        {% endif%}
+    </div>
+{% endblock content %}

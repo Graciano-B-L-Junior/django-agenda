@@ -1,0 +1,22 @@
+{% extends 'html/base.html' %}
+{% block content %}
+    <div class="container">
+        <h1 class="title">
+            <a href="">Agenda</a>
+        </h1>
+        <a class="create-contact" href="">Criar</a>
+        <div class="contact-container">
+            <p><b>Nome completo:</b> {{contact.primeiro_nome}} {{contact.ultimo_nome}}</p>
+            <p><b>Email:</b> {{contact.email}}</p>
+            <p><b>Celular</b> {{contact.celular}}</p>
+            <p><b>Descrição</b> {{contact.description}}</p>
+            {% if contact.picture %}
+            <img src="{% url 'contact.pitcure.url' %}" alt="">
+            {% endif %}
+            <div class="link-items">
+                <a href="{% url 'contact:edit_contact' contact.pk %}">Editar</a>
+                <a href="">Excluir</a>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
