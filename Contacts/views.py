@@ -21,26 +21,47 @@ def view_contact(request,contact_id):
     })
  
 def edit_contact(request,contact_id):
+    contact = get_object_or_404(Contact,pk=contact_id)
+    try:
+        dados_iniciais={
+            'primeiro_nome':contact.primeiro_nome,
+            'ultimo_nome':contact.ultimo_nome,
+            'email':contact.email,
+            'celular':contact.celular,
+            'description':contact.description,
+            'picture':contact.picture.url
+
+        }
+    except:
+        dados_iniciais={
+            'primeiro_nome':contact.primeiro_nome,
+            'ultimo_nome':contact.ultimo_nome,
+            'email':contact.email,
+            'celular':contact.celular,
+            'description':contact.description,
+        }
     if request.method == "POST":
         form = ContactForm(request.POST)
 
         if form.is_valid():
-            print("oi")
+            contact.primeiro_nome = form.primeiro_nome
+            contact.ultimo_nome = form.ultimo_nome
+            contact.description = form.description
+            contact.celular = form.celular
+            contact.picture = form.picture
             return render(request,'contacts/edit_contact.html',
                             {
                 'message':"Contato criado com sucesso",
                 'form':form
             })
         else:
-            print("ola")
             return render(request,'contacts/edit_contact.html',
             {
                 'message':"Corrija o erros",
                 'form':form
             })
     else:
-        form = ContactForm()
-        
+        form = ContactForm(initial=dados_iniciais)
         return render(request,'contacts/edit_contact.html',{
             'form':form
         })

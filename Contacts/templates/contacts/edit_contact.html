@@ -3,9 +3,40 @@
 {% if message %}
 <h3>{{message}}</h3>
 {% endif %}
-<form action="" enctype="multipart/form-data" method="post">
+<form class="edit_contact" action="" enctype="multipart/form-data" method="post">
     {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Submit">
+    <div class="input-info">
+        {{ form.primeiro_nome.errors }}
+        <label for="{{ form.primeiro_nome.id_for_label }}">{{form.primeiro_nome.label}}</label>
+        {{ form.primeiro_nome }}
+    </div>
+    <div class="input-info">
+        {{ form.ultimo_nome.errors }}
+        <label for="{{ form.ultimo_nome.id_for_label }}">{{form.ultimo_nome.label}}</label>
+        {{ form.ultimo_nome }}
+    </div>
+    <div class="input-info">
+        {{ form.email.errors }}
+        <label for="{{ form.email.id_for_label }}">{{form.email.label}}</label>
+        {{ form.email }}
+    </div>
+    <div class="input-info">
+        {{ form.celular.errors }}
+        <label for="{{ form.celular.id_for_label }}">{{form.celular.label}}</label>
+        {{ form.celular }}
+    </div>
+    <div class="input-info">
+        {{ form.description.errors }}
+        <label for="{{ form.description.id_for_label }}">{{form.description.label}}</label>
+        {{ form.description }}
+    </div>
+    <div class="input-info">
+        {{ form.picture.errors }}
+        <label for="{{ form.picture.id_for_label }}">{{form.picture.label}}</label>
+        {{ form.picture }}
+    </div>
+    <div class="input-info">
+        <input type="submit" value="Submit">
+    </div>
 </form>
 {% endblock content %}
