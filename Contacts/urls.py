@@ -10,4 +10,5 @@ urlpatterns = [
     path('search_page=<int:page>',views.index,name='index'),
     path('contact/<int:contact_id>',views.view_contact,name='view_contact'),
     path('contact/edit_contact/<int:contact_id>',views.edit_contact,name='edit_contact'),
+    path('contact/create_contact',views.create_contact,name='create_contact')
 ]

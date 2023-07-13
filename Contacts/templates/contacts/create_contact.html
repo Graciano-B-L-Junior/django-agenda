@@ -5,7 +5,6 @@
     <a href="">Agenda</a>
 </h1>
 <a class="create-contact" href="{% url 'contact:create_contact' %}">Criar</a>
-<a class="back-view-contact" href="{% url 'contact:view_contact' contact_id %}">Voltar</a>
 {% if message %}
 <h3>{{message}}</h3>
 {% endif %}

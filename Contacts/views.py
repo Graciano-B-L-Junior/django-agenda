@@ -2,6 +2,9 @@ from django.shortcuts import render,get_object_or_404,redirect
 from .models import Contact
 from django.core.paginator import Paginator
 from .forms import ContactForm
+from utils.handle_upload_image import handle_uploaded_file
+from datetime import datetime
+from .utils.initial_data_form import set_initial_data
 
 # Create your views here.
 def index(request,page=1):
@@ -15,9 +18,8 @@ def index(request,page=1):
 
 def view_contact(request,contact_id):
     contact = get_object_or_404(Contact,pk=contact_id)
-
     return render(request,'contacts/view_contact.html',{
-        'contact':contact
+        'contact':contact,
     })
  
 def edit_contact(request,contact_id):
@@ -41,27 +43,58 @@ def edit_contact(request,contact_id):
             'description':contact.description,
         }
     if request.method == "POST":
-        form = ContactForm(request.POST)
-
+        form = ContactForm(request.POST,request.FILES,instance=contact)
+        
         if form.is_valid():
-            contact.primeiro_nome = form.primeiro_nome
-            contact.ultimo_nome = form.ultimo_nome
-            contact.description = form.description
-            contact.celular = form.celular
-            contact.picture = form.picture
+            contact=form.save(commit=False)
+            contact.save()
+            form = ContactForm(initial=set_initial_data(contact))
             return render(request,'contacts/edit_contact.html',
-                            {
-                'message':"Contato criado com sucesso",
-                'form':form
+            {
+                'message':"Contato editado com sucesso",
+                'form':form,
+                'contact_picture_url':contact.picture,
+                'contact_id':contact.pk
             })
         else:
             return render(request,'contacts/edit_contact.html',
             {
                 'message':"Corrija o erros",
-                'form':form
+                'form':form,
+                'contact_picture_url':contact.picture,
+                'contact_id':contact.pk
             })
     else:
         form = ContactForm(initial=dados_iniciais)
         return render(request,'contacts/edit_contact.html',{
-            'form':form
+            'form':form,
+            'contact_picture_url':contact.picture,
+            'contact_id':contact.pk
+        })
+    
+def create_contact(request):
+    
+    if request.method == "POST":
+        form = ContactForm(request.POST,request.FILES)
+        
+        if form.is_valid():
+            contact=form.save(commit=False)
+            contact.save()
+            form = ContactForm(initial=set_initial_data(contact))
+            return render(request,'contacts/create_contact.html',
+            {
+                'message':"Contato editado com sucesso",
+                'form':form,
+                'contact_picture_url':contact.picture,
+            })
+        else:
+            return render(request,'contacts/create_contact.html',
+            {
+                'message':"Corrija o erros",
+                'form':form,
+            })
+    else:
+        form = ContactForm()
+        return render(request,'contacts/create_contact.html',{
+            'form':form,
         })
