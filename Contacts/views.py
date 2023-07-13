@@ -5,15 +5,29 @@ from .forms import ContactForm
 from utils.handle_upload_image import handle_uploaded_file
 from datetime import datetime
 from .utils.initial_data_form import set_initial_data
+from django.urls import reverse
+from django.db.models import Q
 
 # Create your views here.
 def index(request,page=1):
     contacts = Contact.objects.all()
     paginator = Paginator(contacts,10)
-    context = {
-        'contacts':paginator.page(page),
-        'paginator':paginator
-    }
+    deleted=False
+    try:
+        deleted = request.GET["contact"]
+    except:
+        ...
+    if deleted==False:
+        context = {
+            'contacts':paginator.page(page),
+            'paginator':paginator
+        }
+    else:
+        context = {
+            'contacts':paginator.page(page),
+            'paginator':paginator,
+            'message':"Contato deletado com sucesso"
+        }
     return render(request,'contacts/index.html',context)
 
 def view_contact(request,contact_id):
@@ -98,3 +112,22 @@ def create_contact(request):
         return render(request,'contacts/create_contact.html',{
             'form':form,
         })
+    
+def delete_contact_view(request,contact_id):
+    contact = get_object_or_404(Contact,pk=contact_id)
+    delete = False
+    try:
+        delete = request.GET['delete']
+    except:
+        ...
+    if delete == False:
+        return render(request,'contacts/view_contact.html',{
+            "show_exclude":True,
+            "contact":contact
+        })
+    else:
+        contact.delete()
+        base_url = reverse('contact:index')
+        query="contact=deleted"
+        url = f"{base_url}?{query}"
+        return redirect(url)

@@ -2,7 +2,7 @@
 {% block content %}
 <div class="container">
 <h1 class="title">
-    <a href="">Agenda</a>
+    <a href="{% url 'contact:index' %}">Agenda</a>
 </h1>
 <a class="create-contact" href="{% url 'contact:create_contact' %}">Criar</a>
 <a class="back-view-contact" href="{% url 'contact:view_contact' contact_id %}">Voltar</a>
