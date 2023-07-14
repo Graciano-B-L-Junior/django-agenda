@@ -7,7 +7,7 @@
 <a class="create-contact" href="{% url 'contact:create_contact' %}">Criar</a>
 <a class="back-view-contact" href="{% url 'contact:view_contact' contact_id %}">Voltar</a>
 {% if message %}
-<h3>{{message}}</h3>
+<h3 class="form-message">{{message}}</h3>
 {% endif %}
     <form class="edit_contact" action="" enctype="multipart/form-data" method="post">
         {% csrf_token %}

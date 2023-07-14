@@ -6,7 +6,7 @@
         </h1>
         <h4 class="title">{{message}}</h4>
         <form class="title" style="width: 30%; text-align: center;" action="{% url 'contact:search' %}" method="GET">
-            <input style="width: 70%;height: 20px;padding: 5px;" type="text" name="name" placeholder="Consulte por nome">
+            <input style="width: 70%;height: 20px;padding: 5px;" type="text" name="name" placeholder="Consulte por nome" value="{{name}}">
             <input type="hidden" name="page" value="1">
             <input style="width: 20%;height: 30px;padding: 5px;" type="submit" value="Pesquisar">
         </form>
@@ -28,12 +28,12 @@
         </div>
         {%endfor%}
         {% if contacts.has_previous %}
-            <a  class="previous-btn" href="{% url 'contact:index' contacts.previous_page_number %}">anterior</a>
+            <a  class="previous-btn" href="{{request.path}}?name={{name}}&page={{contacts.previous_page_number}}">anterior</a>
         {% else %}
             <a class="previous-btn" href="">anterior</a>
         {% endif%}
         {% if contacts.has_next %}
-            <a class="next-btn" href="{% url 'contact:index' contacts.next_page_number %}">proximo</a>
+            <a  class="next-btn" href="{{request.path}}?name={{name}}&page={{contacts.next_page_number}}">Proximo</a>
         {% else %}
             <a class="next-btn" href="">proximo</a>
         {% endif%}

@@ -1,18 +1,45 @@
+@font-face {
+    font-family: Nunito;
+    src: url("../fonts/Nunito-VariableFont_wght.ttf");
+}
+*{
+    font: 'Nunito';
+}
 body{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    width: 100vw;    
+    width: 100vw;
+    background-color: #EEEDEA;    
 }
 p{
     margin: 0px;
+    font-family: 'Nunito';
+}
+h1,h2,h3,h4{
+    font-family: 'Nunito';
+}
+a{
+    text-decoration: none;
+    font-family: 'Nunito';
+    font-weight: bold;
+}
+ul{
+    list-style-type:none;
+    padding:0px;
+}
+ul li{
+    font-weight: bold;
+}
+
+h3.form-message{
+    grid-column:2/12
 }
 
 .container{
     width: 100%;
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    gap: 10px;
     justify-items: center;
 }
 
@@ -22,6 +49,8 @@ p{
 .create-contact{
     grid-column: 2 / 12;
     margin-bottom: 15px;
+    margin-top: 15px;
+    font-size: 30px;
 }
 
 .contact-info{
@@ -43,11 +72,13 @@ div.contact-info:nth-child(3){
 .previous-btn{
     grid-column: 5/7;
     margin-top: 30px;
+    font-size: 25px;
 }
 
 .next-btn{
     grid-column: 7/8;
     margin-top: 30px;
+    font-size: 25px;
 }
 
 .contact-container{

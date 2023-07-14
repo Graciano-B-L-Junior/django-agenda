@@ -9,7 +9,7 @@ from django.urls import reverse
 from django.db.models import Q
 
 # Create your views here.
-def index(request,page=1):
+def index(request,page=1):    
     contacts = Contact.objects.all()
     paginator = Paginator(contacts,10)
     deleted=False
@@ -29,6 +29,19 @@ def index(request,page=1):
             'message':"Contato deletado com sucesso"
         }
     return render(request,'contacts/index.html',context)
+
+def search_contact(request):
+    nome = request.GET.get("name")
+    page = int(request.GET.get("page"))
+    contacts = Contact.objects.filter(Q(primeiro_nome__icontains=nome)|Q(ultimo_nome__icontains=nome))
+    paginator = Paginator(contacts,10)
+    return render(request,'contacts/search.html',{
+        'contacts':paginator.page(page),
+        'paginator':paginator,
+        'name':nome
+
+    })
+
 
 def view_contact(request,contact_id):
     contact = get_object_or_404(Contact,pk=contact_id)
